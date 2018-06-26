@@ -70,6 +70,19 @@ int init()    /* things needed to start sdl2 properly */
     printf("NO FONT FOUND\n");
   }
   #endif
+  
+  #ifdef LASER
+  smallText = TTF_OpenFont("/home/laser/coasterCAM/font/DejaVuSansMono.ttf", 30);
+  if(smallText == NULL)
+  {
+    printf("NO FONT FOUND\n");
+  }
+  regularText = TTF_OpenFont("/home/laser/coasterCAM/font/DejaVuSansMono.ttf", 45);
+  if(regularText == NULL)
+  {
+    printf("NO FONT FOUND\n");
+  }
+  #endif
 
   return 15;
 }
@@ -185,6 +198,14 @@ void touchUpdate()   /* handling touch events */
   if(click == 1)
   {
     coord[touchLocation.x][touchLocation.y] = 1;
+    coord[(touchLocation.x)+1][touchLocation.y] = 1;
+    coord[touchLocation.x][(touchLocation.y)+1] = 1;
+    coord[(touchLocation.x)+1][(touchLocation.y)+1] = 1;
+    coord[(touchLocation.x)+1][(touchLocation.y)-1] = 1;
+    coord[(touchLocation.x)-1][touchLocation.y] = 1;
+    coord[(touchLocation.x)-1][(touchLocation.y)-1] = 1;
+    coord[(touchLocation.x)-1][(touchLocation.y)+1] = 1;
+
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderDrawPoint(renderer, touchLocation.x, touchLocation.y);
   } 
@@ -227,7 +248,33 @@ void touchUpdate()   /* handling touch events */
       }
     }
     #endif
-     
+    #ifdef LASER
+    if(event.type == SDL_MOUSEBUTTONDOWN)
+    {
+      timestamp = event.button.timestamp;
+      touchLocation.x = event.button.x;
+      touchLocation.y = event.button.y;
+      
+    }
+    if(event.type == SDL_MOUSEMOTION)
+    {
+      
+      timestamp = event.button.timestamp;
+      touchLocation.x = event.button.x;
+      touchLocation.y = event.button.y;
+    }
+
+    else if(event.type == SDL_KEYDOWN)
+    {
+      switch(event.key.keysym.sym)
+      {
+        case SDLK_ESCAPE:
+          program = 0;
+          break;
+      }
+    }
+    #endif
+
   }  
 }
 

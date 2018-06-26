@@ -1,9 +1,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
-#define LUKA 1
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 1024
+#define LASER 1
 
 int program;
 int sbarText;
